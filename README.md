@@ -1,2 +1,2 @@
-# Elastic_Vector_Search_Engine
-Elastic_Vector_Search_Engine
+# Vector-Search-Engine
+Vector-Search-Engine in Elasticsearch using Python + FastAPI
