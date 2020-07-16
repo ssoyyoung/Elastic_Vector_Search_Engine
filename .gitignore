@@ -8,3 +8,4 @@ config/*
 *.npy
 test.py
 *.txt
+makeURL.py
