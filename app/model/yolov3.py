@@ -12,16 +12,16 @@ class YoloV3():
         self.cfg = YoloConfig.CFG
         self.weights = YoloConfig.WEIGHTS
         self.names_path = YoloConfig.LABEL_PATH
-
-        # Single GPU / Multi GPU
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        if torch.cuda.device_count() > 1:
-            self.model = nn.DataParallel(model)
         
         # Loading Model
         self.model = Darknet(self.cfg, arc='default').to(self.device).eval()
         self.model.load_state_dict(torch.load(self.weights, map_location=self.device)['model'])
         self.names = load_classes(self.names_path)
+
+        # Single GPU / Multi GPU
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        if torch.cuda.device_count() > 1:
+            self.model = nn.DataParallel(self.model)
         print("[YOLO] Loading Yolo detection Model...")
 
 

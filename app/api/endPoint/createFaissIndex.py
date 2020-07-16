@@ -7,6 +7,7 @@ from app.vector import utils as util
 from config.config import DataConfig, ResultConfig
 
 import time
+import glob
 
 # define router
 router = APIRouter()
@@ -21,8 +22,9 @@ async def createFaiss():
     
     util.cleanUP(ResultConfig.BASE_DIR)
 
-    flist = MySQL.getImgList(cate)
-    yoloResult = VEC.getYoloBox(fnameList=flist, dbCate = "Top")
+    #flist = MySQL.getImgList(cate)
+    flist = glob.glob("/home/piclick/go/src/github.com/ssoyyoung.p/imgDown-Golang/imgs/*.*")
+    yoloResult = VEC.getYoloBox(fnameList=flist, dbCate = "Dress")
 
     for key in yoloResult['info'].keys():
         print(f'[EXTRACT AND SAVE] Starting {key} Category')
