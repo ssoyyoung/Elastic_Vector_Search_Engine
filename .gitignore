@@ -4,7 +4,8 @@ __pycache__
 .ipynb_checkpoints
 resultFile/*
 .vscode
-config/*
+config/DBinfo.json
+config/config.py
 *.npy
 test.py
 *.txt
