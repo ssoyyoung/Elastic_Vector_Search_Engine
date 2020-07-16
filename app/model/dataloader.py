@@ -46,9 +46,26 @@ class YoloDataset(Dataset):
         img, img0, path, label, shapes = list(zip(*batch))  # transposed
         return torch.stack(img, 0), img0, path, label, shapes
 
+
 class YoloImg():
     def __init__(self, fname):
         self.img0 = Image.open(fname).convert('RGB')
         self.img = transform(letterbox(self.img0, 416))
         self.path = fname
         self.shape = (self.img0.size[1], self.img0.size[0])
+
+
+class extDataset(Dataset):
+    def __init__(self,vecs):
+        self.vecs = vecs
+
+    def __len__(self):
+        return self.vecs.shape[0]
+
+    def __getitem__(self, idx):
+
+        '''
+        Output : tensor
+        '''
+        vec = self.vecs[idx]
+        return vec

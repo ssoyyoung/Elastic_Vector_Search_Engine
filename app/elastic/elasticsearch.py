@@ -45,7 +45,7 @@ def insertBulkData(vecs, infos, dataDict, index):
                 "gs_bucket" : f'{Elastic.GS_BUCKET}{dDict[9][4:]}',
                 "raw_box": info['raw_box'],
                 "yolo_label": info['class'],
-                "cgd10_vector": EU.encode_array(vec),
+                Elastic.SAVE_FIELD : EU.encode_array(vec),
                 "@timestamp": EU.utc_time()
             }
         })

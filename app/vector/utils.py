@@ -1,9 +1,10 @@
 import os
 import json
+import math
 import struct
 import numpy as np
 
-from config.config import ResultConfig
+from config.config import ResultConfig, DataConfig
 
 
 # default settings 
@@ -20,11 +21,12 @@ def cleanUP(dirPath):
     `
     @return : None
     '''
-    if not os.path.exists(dirPath): 
-        os.makedirs(dirPath)
-    else:
-        for file in os.scandir(dirPath):
-            os.remove(file.path)
+    for folder in os.scandir(dirPath):
+        for files in os.scandir(folder.path):
+            os.remove(files.path)
+    
+    print(f'[DIR] Deleting all files/folders in {dirPath}')
+
 
 def mkdirSavePath(key):
     '''
@@ -80,3 +82,13 @@ def saveNumpy(nparrays, fileNames):
     else:
         for fileName, nparray in zip(fileNames, nparrays):
             np.save(fileName, nparray)
+
+
+def divideData(totalDataCount, Max):
+    div = 0
+    if totalDataCount > Max: 
+        div = totalDataCount/Max
+    div = math.floor(div)
+    print(f'[DATA] Max count is {Max}, Divid Count is {div}')
+
+    return div
