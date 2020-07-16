@@ -4,9 +4,33 @@ import pymysql
 import sshtunnel
 from PIL import Image
 
-from config.config import Setting
+from config.config import Setting, AWSDB
 
-def connect(nation):
+def connectTurneling():
+
+    tunnel = SSHTunnelForwarder((AWSDB.SSH_HOST, AWSDB.SSH_PORT),  # SSH hosting server
+                                ssh_username = AWSDB.SSH_USERNAME,
+                                ssh_pkey = AWSDB.SSH_PKEY,
+                                remote_bind_address = AWSDB.REMOTE_BIND_ADDRESS,  # addr which SSH server can access
+                                local_bind_address = AWSDB.LOCAL_BIND_ADDRESS)  # mapping addr which python will access
+    
+    tunnel.start()
+    time.sleep(1)
+
+    conn = pymysql.connect(host = tunnel.local_bind_host,
+                            port = tunnel.local_bind_port,
+                            user = AWSDB.USERNAME,
+                            passwd = AWSDB.PASSWORD,
+                            db = AWSDB.DATABASE)
+    
+    return turnel, conn
+
+def turnelingDBClose(self, tunnel, cur):
+    cur.close()
+    tunnel.close()
+
+
+def connect():
     '''
     Commnet : Connect MySQL DataBase
     `
